@@ -13,6 +13,7 @@ the suffixes are "attentat", "terror", and "anschlag". the prefies are attach sp
 |[Berlin](https://de.wikipedia.org/wiki/Anschlag_auf_den_Berliner_Weihnachtsmarkt_an_der_Ged%C3%A4chtniskirche)   |breitscheidplatz|berliner weihnachtsmarkt|anis a***|
 |[Ansbach](https://de.wikipedia.org/wiki/Sprengstoffanschlag_von_Ansbach)  |ansbach        |fränkisches musikfestival|mohammed d*****|
 |[Würzburg](https://de.wikipedia.org/wiki/Anschlag_in_einer_Regionalbahn_bei_W%C3%BCrzburg) |würzburg regionalbahn|Winterhausen|riaz khan a*****|
+
 (attacker's names are only anonymized in this table. #SayTheirNames is for the victims only.)
 
 I plug in all possible combinations of these terms with the suffixes into the search engines at www.spiegel.de/suche, www.faz.net/suche/, www.sueddeutsche.de/news, and bild.de/suche.bild.html and save the returned articles. of course, several articles come up for multiple searches, these duplicates are removed and only counted as one.
