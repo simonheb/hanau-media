@@ -1,10 +1,5 @@
 source('~/hanau-media/pseudo apis.R')
-                                
-suffix<-c("attentat","terror","anschlag")
-prefix_hanau<-c("hanau","kesselstadt","tobias rathjen")
-prefix_berlin<-c("breitscheidplatz","berliner weihnachtsmarkt","anis amri")
-
-#benchmarks<-c("hollywood schauspielerin","gangster rapper","programmieren","iphone android","vegetarier")
+source('~/hanau-media/0 - config.R')
 
 #combine to queries
 queries_hanau<-apply(expand.grid(prefix_hanau,suffix),1,paste0,collapse=" ")

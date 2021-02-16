@@ -4,10 +4,8 @@ library(dplyr)
 library(plotly)
 library(ggthemes)
 library(shinydashboard)
-suffix<-c("attentat","terror","anschlag")
-prefix_hanau<-c("hanau","kesselstadt","tobias rathjen")
-prefix_berlin<-c("breitscheidplatz","berliner weihnachtsmarkt","anis amri")
 
+source('~/hanau-media/0 - config.R')
 
 
 results<-readRDS("2 - cleanedsearchresults.RDS")
