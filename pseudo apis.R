@@ -4,8 +4,11 @@ library(rvest)
 library(dplyr)
 library(xml2)
 library(purrr)
+library(stringr)
 
-szsearch<-function(query,from="15.01.2015",to="21.02.2021") {
+
+szsearch<-function(query,from="01.01.2016",to="21.02.2021") {
+  cat("searching sz.de for:",query)
   urlnow<-paste0("https://www.sueddeutsche.de/news/teasers?from=0&size=1000&search=",gsub(" ","+AND+",query),"&sort=date&all%5B%5D=dep&all%5B%5D=time&typ%5B%5D=article&sys%5B%5D=sz&catsz%5B%5D=alles&endDate=",to,"&startDate=",from,collapse="")
   resp<-GET(urlnow)
   jsonRespText<-fromJSON(content(resp,as="text") , simplifyDataFrame = TRUE)
@@ -15,16 +18,20 @@ szsearch<-function(query,from="15.01.2015",to="21.02.2021") {
   }
   if(jsonRespText$countTotalItems==0) {
     print("This query yielded 0, something might be odd")
-    browser()
+    return(NULL)
   }
   resultsHTML<-jsonRespText$listitems %>% read_html
   results_list<-resultsHTML %>% html_nodes("div.entrylist__entry")
   results_df<-results_list %>% map_df(~data.frame( link=.x%>%html_node("a") %>%html_attr("href"),
-                      kicker=.x%>%html_nodes("strong.entrylist__overline") %>% html_text %>% trimws,
-                      date=.x%>%html_nodes("time.entrylist__time") %>% html_text%>% trimws %>% as.POSIXlt(format="%d.%m.%Y | %H:%M"),
-                      title=.x%>%html_nodes("em.entrylist__title") %>% html_text %>% trimws,
-                      teaser=.x%>%html_nodes("p.entrylist__detail") %>% html_text %>% trimws,
-                      author=paste0(.x%>%html_nodes("span.entrylist__author") %>% html_text %>% trimws,"")))
+                      kicker=.x%>%html_nodes("strong.entrylist__overline") %>% html_text %>% str_squish,
+                      date=.x%>%html_nodes("time.entrylist__time") %>% html_text%>% str_squish %>% as.POSIXlt(format="%d.%m.%Y | %H:%M"),
+                      time=.x%>%html_nodes("time.entrylist__time") %>% html_text%>% str_squish %>% as.POSIXlt(format="%H:%M"), #todays articles are shown only with a time
+                      title=.x%>%html_nodes("em.entrylist__title") %>% html_text %>% str_squish,
+                      teaser=.x%>%html_nodes("p.entrylist__detail") %>% html_text %>% str_squish,
+                      author=paste0(.x%>%html_nodes("span.entrylist__author") %>% html_text %>% str_squish,"")))
+  results_df$date[is.na(results_df$date)]<-results_df$time[is.na(results_df$date)]  
+  if(any(is.na(results_df$date)))
+    browser()
   results_df$query<-query
   results_df$journal<-"sz"
   
@@ -33,7 +40,7 @@ szsearch<-function(query,from="15.01.2015",to="21.02.2021") {
 
 
 
-fazsearch<-function(query,from="11.11.2016",to="18.02.2021",pages=-1) {
+fazsearch<-function(query,from="01.01.2016",to="18.02.2021",pages=-1) {
   if(any(pages!=-1)) {
     cat(".")
     urlnow=pages[1]
@@ -42,15 +49,20 @@ fazsearch<-function(query,from="11.11.2016",to="18.02.2021",pages=-1) {
     cat("searching faz.net for: ",query,"\n")
     urlnow<-paste0("https://www.faz.net/suche/?query=",gsub(" ","+",query),"&type=content&ct=article&author=&from=",(from),"&to=",(to),collapse="")
   }
-  
   search<-html_session(urlnow)
-  results<-search %>% html_nodes("ul.lst-Teaser li article div.tsr-Base_TextWrapper div div.teaserInner") %>% 
+  results_raw<-search %>% html_nodes("ul.lst-Teaser li article div.tsr-Base_TextWrapper div div.teaserInner")
+  if (length(results_raw)==0) {
+    return(NULL)
+  }
+  results<-results_raw %>% 
     map_df(~data.frame( link=.x%>%html_node("a") %>%html_attr("href"),
-                                  kicker=.x%>%html_nodes("span.tsr-Base_HeadlineEmphasisText") %>% html_text %>% trimws,
-                                  date=.x%>%html_nodes("time.tsr-Base_ContentMetaTime") %>% html_attr("datetime")%>%as.POSIXlt(format="%Y-%M-%dT%H:%m:%S"),
-                                  title=.x%>%html_nodes("span.tsr-Base_HeadlineText") %>% html_text %>% trimws,
-                                  teaser=.x%>%html_nodes("div.tsr-Base_Content") %>% html_text %>% trimws,
-                                  author=paste0(.x%>%html_nodes("li.tsr-Base_ContentMetaItem-author") %>% html_text %>% trimws,"")))
+                                  kicker=.x%>%html_nodes("span.tsr-Base_HeadlineEmphasisText") %>% html_text %>% str_squish,
+                                  date=.x%>%html_nodes("time.tsr-Base_ContentMetaTime") %>% html_attr("datetime")%>%as.POSIXlt(format="%Y-%m-%dT%H:%M:%S"),
+                                  title=.x%>%html_nodes("span.tsr-Base_HeadlineText") %>% html_text %>% str_squish,
+                                  teaser=.x%>%html_nodes("div.tsr-Base_Content") %>% html_text %>% str_squish,
+                                  author=paste0(.x%>%html_nodes("li.tsr-Base_ContentMetaItem-author") %>% html_text %>% str_squish,"")))
+  if(mean(c(0,is.na(results$date)))>0.05)
+    browser()
   results$query<-query
   results$journal<-"faz"
   
@@ -83,22 +95,75 @@ fazsearch<-function(query,from="11.11.2016",to="18.02.2021",pages=-1) {
 bildsearch<-function(query) {
   cat("searching bild.de for: ",query,"... ")
   url<-paste0("https://www.bild.de/suche.bild.html?type=article&query=",gsub("\\s","+",query),"&resultsStart=0&resultsPerPage=1000",collapse="")
-  search <- html_session(url)               ## create session content s15
-  results <- search %>% html_nodes("section.query") %>% html_nodes(xpath="//ol/li") 
+  #bild does some serious rate-limitting, so let's sleep a bit so that we don't  scare them
+  Sys.sleep(180)
+  search <-   tryCatch(#had do do this to find rate limits
+    {
+      html_session(url)               ## create session content s15
+    }
+    ,
+    error=function(cond) {
+      message(paste("issue with:", url))
+      message("Here's the original error message:")
+      message(cond)
+      a<-NULL
+      browser()
+      return(a)
+    },
+    warning=function(cond) {
+      message(paste("issue with:", url))
+      message("Here's the original error message:")
+      message(cond)
+      a<-NULL
+      browser()
+      return(a)
+    },
+    finally={
+    }
+  )    
+  results <-   tryCatch(#had do do this to find rate limits
+    {
+      search %>% html_nodes("section.query") %>% html_nodes(xpath="//ol/li") 
+    },
+    
+    error=function(cond) {
+      message(paste("issue with:", url))
+      message("Here's the original error message:")
+      message(cond)
+      a<-NULL
+      browser()
+      return(a)
+    },
+    warning=function(cond) {
+      message(paste("issue with:", url))
+      message("Here's the original error message:")
+      message(cond)
+      a<-NULL
+      browser()
+      return(a)
+    },
+    finally={
+    }
+  )  
+  if (length(results)==0) {
+    return(NULL)
+  }
   extracted_data<-lapply(results,function(x) data.frame(
     "kicker"=x %>% html_node("a")   %>% html_attr("data-tb-kicker"),
     "title"=x %>% html_node("a")   %>% html_attr("data-tb-title"),
-    "teaser"=paste0("",x %>% html_nodes("div") %>% html_nodes("p") %>% html_text %>% trimws()),
+    "teaser"=paste0("",x %>% html_nodes("div") %>% html_nodes("p") %>% html_text %>% str_squish),
     "link"=x %>% html_node("a") %>% html_attr("href"),
     "date"=as.POSIXct(x %>% html_node("a") %>% html_node(xpath="ul/li/time") %>% html_attr("datetime"),format="%Y-%m-%d")))
   extracted_dataframe<-do.call(rbind, extracted_data)
+  if(mean(c(0,is.na(extracted_dataframe$date)))>0.05)
+    browser()
   extracted_dataframe$query<-query
   extracted_dataframe$journal<-"bild"
   cat("returning ",nrow(extracted_dataframe)," articles I found\n")
   return(extracted_dataframe)
 }
 
-spiegelsearch<-function(query,max=100,from="20161111",to="20210213",page=0) {
+spiegelsearch<-function(query,max=100,from="20160101",to="20210213",page=0) {
   if (max!=100) {print("I think spon ignores anything thats not 100")}
   url<-paste0("https://joda.spiegel.de/joda/spon/search?s=",gsub(" ","%20",query),"&p=SPOX,SPPL&f=dokumenttext&page=",page,"&max=",max,"&from=",from,"&to=",to,"&plus=0",collapse="")
   search<-read_xml(url)
@@ -127,6 +192,8 @@ spiegelsearch<-function(query,max=100,from="20161111",to="20210213",page=0) {
   extracted_dataframe<-do.call(rbind, extracted_data)
   extracted_dataframe$query<-query
   extracted_dataframe$journal<-"spiegel"
+  if(any(is.na(extracted_dataframe$date)))
+    browser()
   if (as.numeric(hits)>(page+1)*max) {
     return(rbind(extracted_dataframe,
                  spiegelsearch(query=query,max=max,from=from,to=to,page=page+1)))

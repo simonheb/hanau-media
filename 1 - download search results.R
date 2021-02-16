@@ -1,15 +1,19 @@
-source('~/hanau-media/pseudo apis.R')
-source('~/hanau-media/0 - config.R')
+try({setwd('~/hanau-media/')})
+try({setwd('D:/Dropbox/hanau-media')})
+source('pseudo apis.R')
+source('0 - config.R')
 
 #combine to queries
 queries_hanau<-apply(expand.grid(prefix_hanau,suffix),1,paste0,collapse=" ")
 queries_berlin<-apply(expand.grid(prefix_berlin,suffix),1,paste0,collapse=" ")
+queries_ansbach<-apply(expand.grid(prefix_ansbach,suffix),1,paste0,collapse=" ")
+queries_würzburg<-apply(expand.grid(prefix_würzburg,suffix),1,paste0,collapse=" ")
 
 #search and create data frames of results
+results_berlin_sz<-do.call(dplyr::bind_rows,lapply(queries_berlin,szsearch))
 results_berlin_bild<-do.call(dplyr::bind_rows,lapply(queries_berlin,bildsearch))
 results_berlin_spiegel<-do.call(dplyr::bind_rows,lapply(queries_berlin,spiegelsearch))
 results_berlin_faz<-do.call(dplyr::bind_rows,lapply(queries_berlin,fazsearch))
-results_berlin_sz<-do.call(dplyr::bind_rows,lapply(queries_berlin,szsearch))
 results_berlin<-bind_rows(results_berlin_bild,
                       results_berlin_sz,
                       results_berlin_faz,
@@ -17,20 +21,50 @@ results_berlin<-bind_rows(results_berlin_bild,
 results_berlin$attack<-"berlin"
 
 
+results_hanau_sz<-do.call(dplyr::bind_rows,lapply(gsub("tobias rathjen",'"tobias.r."',queries_hanau),szsearch)) #sz refuses to write out rathjen 
 results_hanau_bild<-do.call(dplyr::bind_rows,lapply(queries_hanau,bildsearch))
 results_hanau_spiegel<-do.call(dplyr::bind_rows,lapply(queries_hanau,spiegelsearch))
-results_hanau_faz<-do.call(dplyr::bind_rows,lapply(queries_hanau,fazsearch))
-results_hanau_sz<-do.call(dplyr::bind_rows,lapply(gsub("tobias rathjen",'"tobias.r."',queries_hanau),szsearch)) #sz refuses to write out rathjen 
+results_hanau_faz<-do.call(dplyr::bind_rows,lapply(gsub("tobias rathjen",'tobias.r',queries_hanau),fazsearch))
 results_hanau<-bind_rows(results_hanau_bild,
-                      results_hanau_sz,
-                      results_hanau_faz,
-                      results_hanau_spiegel)
+                         results_hanau_sz,
+                         results_hanau_faz,
+                         results_hanau_spiegel)
 results_hanau$attack<-"hanau"
 
-results<-rbind(results_hanau,results_berlin)
+
+
+
+results_ansbach_spiegel<-do.call(dplyr::bind_rows,lapply(queries_ansbach,spiegelsearch))
+results_ansbach_sz<-do.call(dplyr::bind_rows,lapply(queries_ansbach,szsearch)) #sz refuses to write out rathjen 
+results_ansbach_faz<-do.call(dplyr::bind_rows,lapply(queries_ansbach,fazsearch))
+results_ansbach_bild<-do.call(dplyr::bind_rows,lapply(queries_ansbach,bildsearch))
+results_ansbach<-bind_rows(results_ansbach_bild,
+                         results_ansbach_sz,
+                         results_ansbach_faz,
+                         results_ansbach_spiegel)
+results_ansbach$attack<-"ansbach"
+
+
+
+results_würzburg_spiegel<-do.call(dplyr::bind_rows,lapply(queries_würzburg,spiegelsearch))
+results_würzburg_faz<-do.call(dplyr::bind_rows,lapply(queries_würzburg,fazsearch))
+results_würzburg_sz<-do.call(dplyr::bind_rows,lapply(queries_würzburg,szsearch)) #sz refuses to write out rathjen 
+results_würzburg_bild<-do.call(dplyr::bind_rows,lapply(queries_würzburg,bildsearch))
+results_würzburg<-bind_rows(results_würzburg_bild,
+                         results_würzburg_sz,
+                         results_würzburg_faz,
+                         results_würzburg_spiegel)
+results_würzburg$attack<-"würzburg"
+
+results<-rbind(results_hanau,results_berlin,results_ansbach,results_würzburg)
 
 print("maybe merge the data with older, stored data, otherwise at some point we will be loosing data")
-saveRDS(list(dat=results,date=Sys.Date()),"1 - rawsearchresults.RDS")
+saveRDS(list(dat=results,
+             date=Sys.Date(),
+             prefix_hanau,
+             prefix_berlin,
+             suffix
+             ),"1 - rawsearchresults.RDS")
 
 # 
 # 

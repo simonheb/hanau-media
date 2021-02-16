@@ -1,4 +1,6 @@
 suffix<-c("attentat","terror","anschlag")
 prefix_hanau<-c("hanau","kesselstadt","tobias rathjen")
 prefix_berlin<-c("breitscheidplatz","berliner weihnachtsmarkt","anis amri")
+prefix_ansbach<-c("ansbach","fr%C3%A4nkisches musikfestival","Mohammed Daleel")
+prefix_würzburg<-c("w%C3%BCrzburg regionalbahn","Winterhausen","Riaz Khan Ahmadzai")
 #benchmarks<-c("hollywood schauspielerin","gangster rapper","programmieren","iphone android","vegetarier")

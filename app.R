@@ -4,9 +4,10 @@ library(dplyr)
 library(plotly)
 library(ggthemes)
 library(shinydashboard)
-
-source('~/hanau-media/0 - config.R')
-
+try({setwd('~/hanau-media/')})
+try({setwd('D:/Dropbox/hanau-media')})
+source('pseudo apis.R')
+source('0 - config.R')
 
 results<-readRDS("2 - cleanedsearchresults.RDS")
 dat<-results$dat
@@ -31,7 +32,7 @@ ui <- dashboardPage(
                                   "\ncombined and a suffix:\n",
                                   paste0(suffix,collapse=", "),
                                   "\non spiegel.de/suche, https://www.faz.net/suche/, sueddeutsche.de/news, and www.bild.de/suche.bild.html.\n",
-                                  "Artikels on Berlin are identified through these terms:\n",
+                                  "Articles on Berlin are identified through these terms:\n",
                                   paste0(prefix_berlin,collapse=", "),
                                   "\nwith the same suffixes. The last update of the search results happened on ",results$date
                 )
