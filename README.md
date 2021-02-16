@@ -22,6 +22,9 @@ I plug in all possible combinations of these terms with the suffixes into the se
 ## why are "Welt" and "Focus" not covered?
 because they have shitty search interfaces on their websites, which do not allow to search for older articles
 
+## why don't you include newspaper/attack XYZ
+I am happy to do that. I am also happy if you do that. this project is open source. I would just suggest that if you add something to it indepently from me, than please consider also pushing your changes to this repository so that we can all discuss the results.
+
 # data pipeline
 1. `pseudo apis.R` contains routines to access websearches of news websites.
 1. `1 - download search results.R` downloads search results from all news websites.
