@@ -28,8 +28,21 @@ i am happy to do that. i am also happy if you do that. this project is open sour
 ## i found an article that matches your search terms, but does not actually talk about the attack in question
 that is well possible. there are a number of articles to which this may apply. i assume this does not drive the overall pattern, but are open to suggestions to refine the search terms or the analysis.
 
-## how do you treat different subjournals (spiegel plus, bento, etc.?)
-//todo
+## how do you interact with each specific search interface and how do you treat different subjournals (spiegel plus, bento, etc.?)
+the different search interfaces require different ways of finetuning. this section provides a short overview of these measures.
+
+### Spiegel
+spiegel allows for some filtering. i restrict the search to anything that is published in "DER SPIEGEL" or "SPIEGEL+", thus effectively excluding "SPIEGEL-PRINT", "SPIEGEL International", etc. bento.de was discontinued and merged into spiegel, this has some bearing on the results here as bento.de ran a series of interviews with the hanau victims family that significantly alter the curves around august 2020, which would be lower without the bento.de articles.
+
+### SZ
+sz allows filtering results. i restrict the search to "articles" only (no videos, galeries, or other links) and only to those that can be attributed to "sueddeutsche.de", thus effectively excluding dpa news. sz also has a slighly different format for search queries. to ensure matching results I thus replace spaces with " AND ". the search term "hanau anschlag" thus becomes "hanau AND anschlag". also, only for the hanau attack, it seems that sz had a policy of not spelling out the attackers full lastname, which is why replace that with an abbreviated "tobias r" in all of the search queries.
+
+### FAZ
+sz allows filtering results. i restrict the search to "articles" only (no videos, galeries, etc).
+
+
+### Bild
+does not allow for subcategories in their search interface, returned results include dpa/agency texts, eilmeldungen and others
 
 # data pipeline
 1. `pseudo apis.R` contains routines to access websearches of news websites.
@@ -38,3 +51,6 @@ that is well possible. there are a number of articles to which this may apply. i
 1. `app.R` is the shiny app.
 1. `*.RDS` store the latest data files after each step in the data pipeline.
 
+#todo:
+*allow to filter-out bento?
+*add halle anschlag?

@@ -8,10 +8,11 @@ proper=function(x) paste0(toupper(substr(x, 1, 1)), tolower(substring(x, 2)))
 results <- readRDS("1 - rawsearchresults.RDS")
 dat <-  results$dat %>% distinct(link,attack, .keep_all = TRUE)
 print(table(dat$journal))
-dat$days_since_attack[dat$attack=="hanau"]<-round(as.numeric(dat$date[dat$attack=="hanau"]-as.POSIXlt("2020-02-19 21:50"),unit="days"),1)
-dat$days_since_attack[dat$attack=="berlin"]<-round(as.numeric(dat$date[dat$attack=="berlin"]-as.POSIXlt("2016-12-19 20:00"),unit="days"),1)
-dat$days_since_attack[dat$attack=="ansbach"]<-round(as.numeric(dat$date[dat$attack=="ansbach"]-as.POSIXlt("2016-07-24 22:10"),unit="days"),1)
-dat$days_since_attack[dat$attack=="würzburg"]<-round(as.numeric(dat$date[dat$attack=="würzburg"]-as.POSIXlt("2016-07-18 21:15"),unit="days"),1)
+dat$days_since_attack[dat$attack=="hanau"]<-ceiling(as.numeric(dat$date[dat$attack=="hanau"]-as.POSIXlt("2020-02-19 21:50"),unit="days"))
+dat$days_since_attack[dat$attack=="berlin"]<-ceiling(as.numeric(dat$date[dat$attack=="berlin"]-as.POSIXlt("2016-12-19 20:00"),unit="days"))
+dat$days_since_attack[dat$attack=="ansbach"]<-ceiling(as.numeric(dat$date[dat$attack=="ansbach"]-as.POSIXlt("2016-07-24 22:10"),unit="days"))
+dat$days_since_attack[dat$attack=="würzburg"]<-ceiling(as.numeric(dat$date[dat$attack=="würzburg"]-as.POSIXlt("2016-07-18 21:15"),unit="days"))
+dat$days_since_attack[dat$attack=="halle"]<-ceiling(as.numeric(dat$date[dat$attack=="halle"]-as.POSIXlt("2019-10-09 12:00"),unit="days"))
 
 dat<-dat[order(dat$dat),]
 
@@ -38,6 +39,7 @@ days_since_hanau     <- ceiling(as.numeric(Sys.time()-as.POSIXlt("2020-02-19 21:
 days_since_berlin    <- ceiling(as.numeric(Sys.time()-as.POSIXlt("2016-12-19 20:00"),unit="days")) #B
 days_since_ansbach   <- ceiling(as.numeric(Sys.time()-as.POSIXlt("2016-07-24 22:10"),unit="days")) #a
 days_since_wuerzburg <- ceiling(as.numeric(Sys.time()-as.POSIXlt("2016-07-18 21:15"),unit="days")) #w
+days_since_halle     <- ceiling(as.numeric(Sys.time()-as.POSIXlt("2019-10-09 12:00"),unit="days")) #w
 
 #append expanded data
 dat<-bind_rows(
@@ -50,10 +52,11 @@ dat<-bind_rows(
 
 
 dat<-subset(dat, days_since_attack > -365 & (
-           attack=="berlin" & days_since_attack <= days_since_berlin |
-           attack=="hanau"  & days_since_attack <= days_since_hanau |
-           attack=="würzburg"  & days_since_attack <= days_since_wuerzburg |
-           attack=="ansbach"  & days_since_attack <= days_since_ansbach 
+  attack=="berlin" & days_since_attack <= days_since_berlin |
+    attack=="hanau"  & days_since_attack <= days_since_hanau |
+    #attack=="würzburg"  & days_since_attack <= days_since_wuerzburg |
+    attack=="ansbach"  & days_since_attack <= days_since_ansbach |
+    attack=="halle"  & days_since_attack <= days_since_halle 
 ))
 
 data_weekly <- 
@@ -62,30 +65,27 @@ data_weekly <-
   summarize(count=sum(count))
 
 first_year_weekly<-data_weekly %>% 
-                    subset(weeksinceattack>=0 & weeksinceattack<52) %>%
-                    mutate(anyarticle=count>0)
+  subset(weeksinceattack>=0 & weeksinceattack<52) %>%
+  mutate(anyarticle=count>0)
 
 saveRDS(dat,"outputdata article-level.RDS")
 saveRDS(data_weekly,"outputdata week-level.RDS")
-csdcsdcdd
-print(nrow(subset(dat,attack=="hanau" & days_since_attack>=0)))
-print(nrow(subset(dat,attack=="berlin" & days_since_attack>=0& days_since_attack<365)))
-print(table(subset(dat,attack=="hanau" & days_since_attack>=0)$journal))
-print(table(subset(dat,attack=="berlin" & days_since_attack>=0& days_since_attack<365)$journal))
-print(table(subset(dat,attack=="hanau" & days_since_attack>=0)$journal))
 
-first_year_weekly %>% group_by(journal,attack) %>% summarize(mean=sum(any)) %>% acast(attack ~ journal)
 
-print(length(unique(subset(dat,attack=="hanau" & journal=="bild" & count>0 & days_since_attack>=0 & days_since_attack<365)$daysinceattack)))
-print(length(unique(subset(dat,attack=="hanau" & journal=="sz" & count>0 & days_since_attack>=0 & days_since_attack<365)$daysinceattack)))
-print(length(unique(subset(dat,attack=="hanau" & journal=="faz" & count>0 & days_since_attack>=0 & days_since_attack<365)$daysinceattack)))
-print(length(unique(subset(dat,attack=="hanau" & journal=="spiegel" & count>0 & days_since_attack>=0 & days_since_attack<365)$daysinceattack)))
-print(length(unique(subset(dat,attack=="berlin" & journal=="bild" & count>0 & days_since_attack>=0 & days_since_attack<365)$daysinceattack)))
-print(length(unique(subset(dat,attack=="berlin" & journal=="sz" & count>0 & days_since_attack>=0 & days_since_attack<365)$daysinceattack)))
-print(length(unique(subset(dat,attack=="berlin" & journal=="faz" & count>0 & days_since_attack>=0 & days_since_attack<365)$daysinceattack)))
-print(length(unique(subset(dat,attack=="berlin" & journal=="spiegel" & count>0 &days_since_attack>=0 & days_since_attack<365)$daysinceattack)))
+library(ggforce)
 
-csdcd
 
-data_weekly  %>% group_by(weeksinceattack,attack) %>% summarize(count = sum(count)) %>% ggplot(aes(x=weeksinceattack,y=count))+geom_line(aes(group=attack,color=attack))+xlim(c(-5,52))
 
+
+dat %>%
+  group_by(full_days_since_attack=floor(days_since_attack),attack) %>%
+  summarize(count=sum(count))  %>% 
+  ggplot(aes(x=full_days_since_attack,y=count))+geom_line(aes(group=attack,color=attack))+xlim(c(-4,14))
+
+theme_simon<-theme_solarized() +  theme(legend.position = c(0.98, 0.98),legend.justification = c(1, 1))
+dat %>%
+  group_by(full_days_since_attack=floor(days_since_attack),attack) %>%
+  summarize(count=sum(count))  %>% 
+  ggplot(aes(x=full_days_since_attack,y=count))+geom_smooth(aes(group=attack,color=attack),method="loess",method.args = list(degree=0),span=14/365,n=10000,se=F)+xlim(c(-14,366))+
+  labs(x="Tage nach Anschlag",y="Veröffentlichungen pro Tag (Gleitender 14-Tage Durchschnitt)")+guides(color=guide_legend(title="Anschlag"))+
+  theme_simon+scale_colour_colorblind()

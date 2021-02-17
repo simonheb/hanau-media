@@ -8,6 +8,7 @@ queries_hanau<-apply(expand.grid(prefix_hanau,suffix),1,paste0,collapse=" ")
 queries_berlin<-apply(expand.grid(prefix_berlin,suffix),1,paste0,collapse=" ")
 queries_ansbach<-apply(expand.grid(prefix_ansbach,suffix),1,paste0,collapse=" ")
 queries_würzburg<-apply(expand.grid(prefix_würzburg,suffix),1,paste0,collapse=" ")
+queries_halle<-apply(expand.grid(prefix_halle,suffix),1,paste0,collapse=" ")
 
 #search and create data frames of results
 results_berlin_sz<-do.call(dplyr::bind_rows,lapply(queries_berlin,szsearch))
@@ -51,10 +52,20 @@ results_würzburg_faz<-do.call(dplyr::bind_rows,lapply(queries_würzburg,fazsear
 results_würzburg_sz<-do.call(dplyr::bind_rows,lapply(queries_würzburg,szsearch)) #sz refuses to write out rathjen 
 results_würzburg_bild<-do.call(dplyr::bind_rows,lapply(queries_würzburg,bildsearch))
 results_würzburg<-bind_rows(results_würzburg_bild,
-                         results_würzburg_sz,
-                         results_würzburg_faz,
-                         results_würzburg_spiegel)
+                            results_würzburg_sz,
+                            results_würzburg_faz,
+                            results_würzburg_spiegel)
 results_würzburg$attack<-"würzburg"
+
+results_halle_spiegel<-do.call(dplyr::bind_rows,lapply(queries_halle,spiegelsearch))
+results_halle_faz<-do.call(dplyr::bind_rows,lapply(queries_halle,fazsearch))
+results_halle_sz<-do.call(dplyr::bind_rows,lapply(queries_halle,szsearch)) #sz refuses to write out rathjen 
+results_halle_bild<-do.call(dplyr::bind_rows,lapply(queries_halle,bildsearch))
+results_halle<-bind_rows(results_halle_bild,
+                            results_halle_sz,
+                            results_halle_faz,
+                            results_halle_spiegel)
+results_halle$attack<-"halle"
 
 results<-rbind(results_hanau,results_berlin,results_ansbach,results_würzburg)
 

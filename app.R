@@ -7,7 +7,7 @@ library(shinydashboard)
 try({setwd('~/hanau-media/')})
 try({setwd('D:/Dropbox/hanau-media')})
 source('pseudo apis.R')
-source('0 - config.R')
+source('0 - config.R',encoding = "utf-8")
 
 results<-readRDS("2 - cleanedsearchresults.RDS")
 dat<-results$dat
@@ -17,7 +17,7 @@ ui <- dashboardPage(
   
   dashboardHeader(title="Medienresonanz Deutscher Zeitungen zum Rassistischen Anschlag in Hanau",titleWidth="100%"),
   
-    dashboardSidebar(
+    dashboardSidebar(width = 450,
       selectInput(inputId="Anschlag",label="Attentat",choices = unique(dat$Anschlag),
                   selected = "Hanau",multiple = T),
       selectInput(inputId="Zeitung",label="Zeitungen",choices = unique(dat$Zeitung),
@@ -25,6 +25,7 @@ ui <- dashboardPage(
       sliderInput(inputId = "timeframe",
                   label = "Tage vor und nach dem Attentat:",
                   min = -90, max = 365*2,value = c(-30,365)),
+      checkboxInput(inputId = "filterbento", label="filter out spiegel results that were actually published by bento.de"),
       h4("Erläuterungen"),
       helpText(
         paste0("Articles on Hanau are identified as matching any of these search terms:\n",

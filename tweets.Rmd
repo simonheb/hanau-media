@@ -5,25 +5,40 @@ output: html_document
 
 ```{r setup, include=FALSE, warning=FALSE}
 library(ggplot2)
+library(ggthemes)
 library(dplyr)
 library(reshape2)
+aorder<-c("hanau","berlin")
 dat<-readRDS("outputdata article-level.RDS")
 data_weekly<-readRDS("outputdata week-level.RDS")
+
+dat$attack <- factor(dat$attack, levels = c(aorder,setdiff(unique(dat$attack),aorder)))
+data_weekly$attack <- factor(data_weekly$attack, levels = c(aorder,setdiff(unique(data_weekly$attack),aorder)))
+
+
 dat$full_days_since_attack<-floor(dat$days_since_attack)
+
+theme_simon<-theme_solarized() +  theme(legend.position = c(0.98, 0.98),legend.justification = c(1, 1))
+
 ```
 
 Kriegt die gesellschaftliche Aufarbeitung des Hanau Attentats ausreichende mediale Aufmerksamkeit? Das ist schwer zu quantifizieren. Es scheint aber zumindest als ob große Zeitungen es wenig Thematisieren. Es gibt Gründe dafür, aber das sollten wir ändern. Ein Thread und Aufruf Hanau und Betroffnen mehr Raum zu geben:
 
 ```{r plot, echo=FALSE, warning=FALSE,message=FALSE}
-data_weekly  %>% 
-  group_by(weeksinceattack,attack) %>% 
-  summarize(count = sum(count)) %>%  
-  ggplot(aes(x=weeksinceattack,y=count))+geom_line(aes(group=attack,color=attack))+xlim(c(-5,52))
+dat %>%
+  group_by(full_days_since_attack=floor(days_since_attack),attack) %>%
+  summarize(count=sum(count))  %>% 
+  ggplot(aes(x=full_days_since_attack,y=count))+geom_smooth(aes(group=attack,color=attack),method="loess",method.args = list(degree=0),span=14/365,n=10000,se=F)+xlim(c(-14,366))+
+  labs(x="Tage nach Anschlag",y="Veröffentlichungen (laut Suchmaschine der jew. Zeitung)",title="Veröffentlichungen pro Tag (Gleitender 14-Tage Durchschnitt)")+guides(color=guide_legend(title="Anschlag"))+
+  theme_simon+scale_colour_colorblind()
+
 ```
 
 Gewalttaten prägen gesellschaftliche Diskurse über lange Zeiträume und werden so aufgearbeitet. Besonders wenn ihnen erkennbare Ursaches (z.B Rassismus) zugrunde liegen ist das wichtig. Als Maß für mediale Aufmerksamkeit, zähle ich Artikel zu passenden Schlagwörtern in reichweitenstarken Zeitungen (@Bild, @SZ, @FAZ, @Spiegelonline).
 ```{r plot2, echo=FALSE, warning=FALSE}
-subset(dat, attack=="hanau" & count>0 & days_since_attack>0) %>% ggplot(aes(x=Zeitung)) + geom_bar(aes(fill=Zeitung))
+subset(dat, attack=="hanau" & count>0 & days_since_attack>0) %>% ggplot(aes(x=journal)) + geom_bar(aes(fill=journal)) +
+    labs(x="Zeitung",y="",title="Veröffentlichungen im ersten Jahr")+
+  theme_simon+scale_fill_colorblind()+theme(legend.position = "none")
 ```
 
 Insgesamt wurden von diesen vier Zeitungen `r nrow(subset(dat,attack=="hanau" & days_since_attack>=0 & count>0))` Artikel geschrieben, die relevante Schlagwörter zum rassistischen Anschlag in Hanau enthalten
@@ -38,7 +53,9 @@ FAZ:  `r 365-nrow(unique(subset(dat,attack=="hanau" & full_days_since_attack %in
 
 ```{r plot4, echo=FALSE}
 subset(dat,attack=="hanau" & full_days_since_attack>0 & count>0) %>% distinct(journal,full_days_since_attack,journal) %>% 
-    ggplot(aes(x=journal)) + geom_bar(aes(group=journal,fill=journal)) + labs(x="Zeitung",y="Tage im letzten Jahr mit mindestens einem Artikel")
+    ggplot(aes(x=journal)) + geom_bar(aes(group=journal,fill=journal)) +
+    labs(x="Zeitung",y="",title="Tage mit überhaupt einer Veröffentlichung zu Hanau")+
+  theme_simon+scale_fill_colorblind()+theme(legend.position = "none")
 ```
 
 Das scheint wenig für eine Tat dieser Tragweite. Hängt das damit zusammen, dass sie sich nicht gegen die weiße Mehrheitsgesellschaft richtet?
@@ -51,13 +68,29 @@ Spiegel: `r nrow(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365
 
 ```{r plot3, echo=FALSE, warning=FALSE}
 ggplot(subset(dat, count>0 &
-                  attack %in% c("hanau","berlin","ansbach") & 
-                  full_days_since_attack %in% 15:365),
-    aes(x=Zeitung,fill=attack)) +
-    labs(x="Zeitung",y="Artikel im ersten Jahr nach Anschlag (ohne die ersten 2 Wochen")+
-    geom_bar(position = "dodge")+
-    geom_text(aes(label=Anschlag), stat='count', position=position_dodge(width=0.9))
+                  attack %in% c("hanau","berlin","ansbach","halle") & 
+                  full_days_since_attack %in% 14:365),
+    aes(x=journal,fill=attack)) +
+    labs(x="Zeitung",title="Artikel im ersten Jahr nach Anschlag\n(ohne die ersten 2 Wochen)",y="")+
+    theme_simon+scale_fill_colorblind()+
+    geom_bar(position = "dodge")+ylim(c(0,730))+
+    geom_text(aes(label=attack), stat='count', position=position_dodge(width=0.9), vjust=0,angle=80,hjust=0)+theme(legend.position = "none")
+
 ```
+```{r plot3v, echo=FALSE, warning=FALSE}
+subset(dat,attack %in% c("hanau","berlin","ansbach","halle")& full_days_since_attack %in% 14:365 & count>0) %>% distinct(journal,full_days_since_attack,attack) %>% 
+ggplot(aes(x=journal,fill=attack)) +
+    labs(x="Zeitung",title="Tage im ersten Jahr mit überhaupt einer Veröffentlichung zum Thema\n(ohne die ersten 2 Wochen)",y="")+
+    theme_simon+scale_fill_colorblind()+
+    geom_bar(position = "dodge")+ylim(c(0,250))+
+    geom_text(aes(label=attack), stat='count', position=position_dodge(width=0.9), vjust=0,angle=80,hjust=0)+theme(legend.position = "none")
+
+```
+
+
+
+
+
 
 Eine Analyse wie diese hier ist natürlich massiv Lückenhaft:
 <ul>
