@@ -16,14 +16,20 @@ the suffixes are "attentat", "terror", and "anschlag". the prefies are attach sp
 
 (attacker's names are only anonymized in this table. #SayTheirNames is for the victims only.)
 
-I plug in all possible combinations of these terms with the suffixes into the search engines at www.spiegel.de/suche, www.faz.net/suche/, www.sueddeutsche.de/news, and bild.de/suche.bild.html and save the returned articles. of course, several articles come up for multiple searches, these duplicates are removed and only counted as one.
+i plug in all possible combinations of these terms with the suffixes into the search engines at www.spiegel.de/suche, www.faz.net/suche/, www.sueddeutsche.de/news, and bild.de/suche.bild.html and save the returned articles. of course, several articles come up for multiple searches, these duplicates are removed and only counted as one.
 
 
 ## why are "Welt" and "Focus" not covered?
 because they have shitty search interfaces on their websites, which do not allow to search for older articles
 
 ## why don't you include newspaper/attack XYZ
-I am happy to do that. I am also happy if you do that. this project is open source. I would just suggest that if you add something to it indepently from me, than please consider also pushing your changes to this repository so that we can all discuss the results.
+i am happy to do that. i am also happy if you do that. this project is open source. i would just suggest that if you add something to it indepently from me, than please consider also pushing your changes to this repository so that we can all discuss the results.
+
+## i found an article that matches your search terms, but does not actually talk about the attack in question
+that is well possible. there are a number of articles to which this may apply. i assume this does not drive the overall pattern, but are open to suggestions to refine the search terms or the analysis.
+
+## how do you treat different subjournals (spiegel plus, bento, etc.?)
+//todo
 
 # data pipeline
 1. `pseudo apis.R` contains routines to access websearches of news websites.

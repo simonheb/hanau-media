@@ -1,0 +1,69 @@
+---
+title: "Tweet"
+output: html_document
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(reshape2)
+dat<-readRDS("outputdata article-level.RDS")
+data_weekly<-readRDS("outputdata week-level.RDS")
+dat$full_days_since_attack<-floor(dat$days_since_attack)
+```
+
+Kriegt die gesellschaftliche Aufarbeitung des Hanau Attentats ausreichende mediale Aufmerksamkeit? Das ist schwer zu quantifizieren. Es scheint aber zumindest als ob große Zeitungen es wenig Thematisieren. Es gibt Gründe dafür, aber das sollten wir ändern. Ein Thread und Aufruf Hanau und Betroffnen mehr Raum zu geben:
+
+```{r plot, echo=FALSE, warning=FALSE,message=FALSE}
+data_weekly  %>% 
+  group_by(weeksinceattack,attack) %>% 
+  summarize(count = sum(count)) %>%  
+  ggplot(aes(x=weeksinceattack,y=count))+geom_line(aes(group=attack,color=attack))+xlim(c(-5,52))
+```
+
+Gewalttaten prägen gesellschaftliche Diskurse über lange Zeiträume und werden so aufgearbeitet. Besonders wenn ihnen erkennbare Ursaches (z.B Rassismus) zugrunde liegen ist das wichtig. Als Maß für mediale Aufmerksamkeit, zähle ich Artikel zu passenden Schlagwörtern in reichweitenstarken Zeitungen (@Bild, @SZ, @FAZ, @Spiegelonline).
+```{r plot2, echo=FALSE, warning=FALSE}
+subset(dat, attack=="hanau" & count>0 & days_since_attack>0) %>% ggplot(aes(x=Zeitung)) + geom_bar(aes(fill=Zeitung))
+```
+
+Insgesamt wurden von diesen vier Zeitungen `r nrow(subset(dat,attack=="hanau" & days_since_attack>=0 & count>0))` Artikel geschrieben, die relevante Schlagwörter zum rassistischen Anschlag in Hanau enthalten
+Bild: `r nrow(subset(dat,attack=="hanau" & days_since_attack>=0 & count>0 & journal=="bild"))`<br />
+SZ: `r nrow(subset(dat,attack=="hanau" & days_since_attack>=0 & count>0 & journal=="sz"))`<br />
+Spiegel: `r nrow(subset(dat,attack=="hanau" & days_since_attack>=0 & count>0 & journal=="spiegel"))`<br />
+FAZ: `r nrow(subset(dat,attack=="hanau" & days_since_attack>=0 & count>0 & journal=="faz"))`.<br /><br />
+Bild hat dabei aber an `r 365-nrow(unique(subset(dat,attack=="hanau" & full_days_since_attack %in% 0:365  & count>0 & journal=="bild",select="full_days_since_attack")))` Tagen des vergangen Jahres keinen einzigen Artikel der in der Suche zu Hanau auftaucht. 
+(SZ: `r 365-nrow(unique(subset(dat,attack=="hanau" & full_days_since_attack %in% 0:365  & count>0 & journal=="sz",select="full_days_since_attack")))` Tage,
+Spiegel:  `r 365-nrow(unique(subset(dat,attack=="hanau" & full_days_since_attack %in% 0:365  & count>0 & journal=="spiegel",select="full_days_since_attack")))` Tage,
+FAZ:  `r 365-nrow(unique(subset(dat,attack=="hanau" & full_days_since_attack %in% 0:365  & count>0 & journal=="faz",select="full_days_since_attack")))` Tage)
+
+```{r plot4, echo=FALSE}
+subset(dat,attack=="hanau" & full_days_since_attack>0 & count>0) %>% distinct(journal,full_days_since_attack,journal) %>% 
+    ggplot(aes(x=journal)) + geom_bar(aes(group=journal,fill=journal)) + labs(x="Zeitung",y="Tage im letzten Jahr mit mindestens einem Artikel")
+```
+
+Das scheint wenig für eine Tat dieser Tragweite. Hängt das damit zusammen, dass sie sich nicht gegen die weiße Mehrheitsgesellschaft richtet?
+Das Leid unterschiedlicher Katastrophen lässt sich nie vergleichen.
+Man kann aber feststellen dass Hanau in etwa so viel mediale Aufmerksamkeit erhält wie der Anschlag von Ansbach, der deutlich weniger Medial bearbeitet wurde als beispielsweise der aus Berlin. Zum Weihnachtsmarkt-Attentat gibt es für das erste Jahr `r nrow(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365  & count>0))` Artikel.<br/>
+Bild: `r nrow(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:366 & count>0 & journal=="bild"))` Artikel an `r nrow(unique(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365  & count>0 & journal=="bild",select="full_days_since_attack")))` Tagen,<br/>
+SZ: `r nrow(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365& full_days_since_attack>=0 & count>0 & journal=="sz"))` Artikel `r nrow(unique(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365  & count>0 & journal=="sz",select="full_days_since_attack")))` an Tagen,<br/>
+FAZ: `r nrow(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365& full_days_since_attack>=0 & count>0 & journal=="faz"))` Artikel an `r nrow(unique(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365  & count>0 & journal=="faz",select="full_days_since_attack")))` Tagen,<br/>
+Spiegel: `r nrow(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365 & full_days_since_attack>=0 & count>0 & journal=="spiegel"))` Artikel an `r nrow(unique(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365  & count>0 & journal=="spiegel",select="full_days_since_attack")))` Tagen.
+
+```{r plot3, echo=FALSE, warning=FALSE}
+ggplot(subset(dat, count>0 &
+                  attack %in% c("hanau","berlin","ansbach") & 
+                  full_days_since_attack %in% 15:365),
+    aes(x=Zeitung,fill=attack)) +
+    labs(x="Zeitung",y="Artikel im ersten Jahr nach Anschlag (ohne die ersten 2 Wochen")+
+    geom_bar(position = "dodge")+
+    geom_text(aes(label=Anschlag), stat='count', position=position_dodge(width=0.9))
+```
+
+Eine Analyse wie diese hier ist natürlich massiv Lückenhaft:
+<ul>
+<li> Artikel unterscheiden sich in Länge, Qualität und Stoßrichtung, werden hier aber gleich gezählt.</li>
+<li> Die Text-Suche ist nie perfekt. Manche Artikel werden fehlen andere Falsch zugeordnet.</li>
+<li> Aufarbeitung passiert auch auf anderen Wegen als in Zeitungen. Hier wird nur auf eine Dimension fokussiert.</li>
+<li> Aufmerksamkeit ist ein knappes Gut. 2017 und 2020 hatten viele Themen die Terror den Medien verdrängen konnten (Trumps Amtsantritt 2017, Corona 2020). Die verhältnismäßig geringe Artikeldichte hangt sicher *auch* mit Corona zusammen.</li>
+</ul>
+Der Code für die Analyse und weitere erklärende Details sind offen zugänglich unter: github.com/simonheb/hanau-media

@@ -53,7 +53,7 @@ server <- function(input, output){
                                            Anschlag %in% input$Anschlag &
                                            days_since_attack > input$timeframe[1] &
                                            days_since_attack < input$timeframe[2],
-                                         select=c("Datum","Zeitung","Link")
+                                         select=c("Datum","Anschlag","Zeitung","Link")
   ),
   escape = FALSE, #make sure <a> links are shown as links
   options = list(autoWidth = TRUE,columnDefs = list(list(width = '10px', targets = c(0,1))))) #column width
