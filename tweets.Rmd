@@ -29,7 +29,7 @@ dat$full_days_since_attack<-floor(dat$days_since_attack)
 theme_simon<-theme_solarized() +  theme(legend.position = c(0.98, 0.98),legend.justification = c(1, 1))
 
 ```
-Erhält die Aufarbeitung des Hanau-Attentats genug gesellschaftliche Aufmerksamkeit? Das ist schwer zu quantifizieren. Es scheint aber, als ob große Zeitungen es (aus vielerlei Gründen) wenig thematisieren.
+Erhält die Aufarbeitung des Hanau-Attentats genug gesellschaftliche Aufmerksamkeit? Das ist schwer zu quantifizieren. Es scheint aber, als ob große Zeitungen es wenig thematisieren.
 
 Ein Daten-🧵 und ein Aufruf Hanau und den Betroffenen mehr Raum zu geben.
 ```{r plot, echo=FALSE, warning=FALSE,message=FALSE}
@@ -42,7 +42,7 @@ dat %>%
 
 ```
 
-Anschläge prägen Diskurse über lange Zeit und werden so aufgearbeitet. Das ist wichtig, besonders wenn erkennbare Ursachen (z.B Rassismus) zu Grunde liegen. Als Maß für mediale Aufmerksamkeit zähle ich Suchergebnisse zu passenden Schlagwörtern in @Bild, @SZ, @FAZ, @derspiegel
+Anschläge prägen Diskurse in Medien und werden so gesellschaftlich aufgearbeitet. Das ist wichtig, besonders wenn systemische Ursachen (⇒Rassismus) erkennbar sind. Als Maß für mediale Aufmerksamkeit zähle ich Suchergebnisse zu passenden Schlagworten in @Bild,@SZ,@FAZ,@derspiegel
 
 ```{r plot2, echo=FALSE, warning=FALSE}
 subset(dat, attack=="hanau" & count>0 & days_since_attack>0) %>% ggplot(aes(x=journal)) + geom_bar(aes(fill=journal)) +
@@ -110,10 +110,10 @@ Caveats:
 So eine Analyse ist natürlich massiv Lückenhaft:
 <ol>
 <li> Veröffentlichungen unterscheiden sich in Länge, Qualität und Ausrichtung. Hier werden alle gleich gezählt.</li>
-<li> Text-Suche ist nie perfekt. Manche Veröffentlichungen fehlen andere falsch zugeordnet.</li>
+<li> Text-Suche ist nie perfekt. Manche Veröffentlichungen fehlen andere sind falsch zugeordnet.</li>
 <hr>
 <li> Aufarbeitung passiert auch auf anderen Wegen als in Zeitungen.</li>
-<li> Aufmerksamkeit ist ein knappes Gut. Andere Themen können Anschläge aus den Medien verdrängen (z.B. Trumps 2017, Corona 2020). Die verhältnismäßig geringe Artikeldichte hangt sicher *auch* mit Corona zusammen.</li>
+<li> Aufmerksamkeit ist ein knappes Gut. Andere Themen können Anschläge aus den Medien verdrängen (z.B. Trumps 2017, Corona 2020). Die verhältnismäßig geringe Artikeldichte hängt sicher *auch* mit Corona zusammen.</li>
 </ol>
 <hr>
 Der Code und weitere erklärende Details sind zugänglich, prüfbar und replizierbar unter: github.com/simonheb/hanau-media.<br/>

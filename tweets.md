@@ -3,16 +3,16 @@ Tweets on hanau-media
 
 Erhält die Aufarbeitung des Hanau-Attentats genug gesellschaftliche
 Aufmerksamkeit? Das ist schwer zu quantifizieren. Es scheint aber, als
-ob große Zeitungen es (aus vielerlei Gründen) wenig thematisieren.
+ob große Zeitungen es wenig thematisieren.
 
 Ein Daten-🧵 und ein Aufruf Hanau und den Betroffenen mehr Raum zu geben.
 ![](tweets_files/figure-gfm/plot-1.png)<!-- -->
 
-Anschläge prägen Diskurse über lange Zeit und werden so aufgearbeitet.
-Das ist wichtig, besonders wenn erkennbare Ursachen (z.B Rassismus) zu
-Grunde liegen. Als Maß für mediale Aufmerksamkeit zähle ich
-Suchergebnisse zu passenden Schlagwörtern in @Bild, @SZ, @FAZ,
-@derspiegel
+Anschläge prägen Diskurse in Medien und werden so gesellschaftlich
+aufgearbeitet. Das ist wichtig, besonders wenn systemische Ursachen
+(⇒Rassismus) erkennbar sind. Als Maß für mediale Aufmerksamkeit zähle
+ich Suchergebnisse zu passenden Schlagworten in
+@Bild,@SZ,@FAZ,@derspiegel
 
 ![](tweets_files/figure-gfm/plot2-1.png)<!-- -->
 
@@ -60,7 +60,7 @@ Ausrichtung. Hier werden alle gleich gezählt.
 
 <li>
 
-Text-Suche ist nie perfekt. Manche Veröffentlichungen fehlen andere
+Text-Suche ist nie perfekt. Manche Veröffentlichungen fehlen andere sind
 falsch zugeordnet.
 
 </li>
@@ -77,7 +77,7 @@ Aufarbeitung passiert auch auf anderen Wegen als in Zeitungen.
 
 Aufmerksamkeit ist ein knappes Gut. Andere Themen können Anschläge aus
 den Medien verdrängen (z.B. Trumps 2017, Corona 2020). Die
-verhältnismäßig geringe Artikeldichte hangt sicher *auch* mit Corona
+verhältnismäßig geringe Artikeldichte hängt sicher *auch* mit Corona
 zusammen.
 
 </li>
