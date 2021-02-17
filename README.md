@@ -1,5 +1,5 @@
 # hanau-media
-tracing the media coverage of the hanau attack
+tracing media coverage of the hanau attack
 
 # data faq
 ## how do you find publications matching a particular attack?
