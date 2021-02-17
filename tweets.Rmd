@@ -1,5 +1,5 @@
 ---
-title: "Tweet"
+title: "Tweets on hanau-media"
 output: github_document
 ---
 
@@ -115,5 +115,6 @@ So eine Analyse ist natürlich massiv Lückenhaft:
 </ol>
 <hr>
 Der Code für die Analyse und weitere erklärende Details sind zugänglich, prüfbar und replizierbar unter: github.com/simonheb/hanau-media.
+Die Daten sind via: simonheb.shinyapps.io/hanau-media/ einsehbar.
 Es gibt natürlich keine Garantie für die Richtigkeit der Zahlen und Ergänzungen und Korrekturen sind willkommen.
 

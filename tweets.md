@@ -1,4 +1,4 @@
-Tweet
+Tweets on hanau-media
 ================
 
 Erhält die Aufarbeitung des Hanau-Attentats genug gesellschaftliche
@@ -83,6 +83,7 @@ zusammen.
 <hr>
 
 Der Code für die Analyse und weitere erklärende Details sind zugänglich,
-prüfbar und replizierbar unter: github.com/simonheb/hanau-media. Es gibt
+prüfbar und replizierbar unter: github.com/simonheb/hanau-media. Die
+Daten sind via: simonheb.shinyapps.io/hanau-media/ einsehbar. Es gibt
 natürlich keine Garantie für die Richtigkeit der Zahlen und Ergänzungen
 und Korrekturen sind willkommen.
