@@ -1,0 +1,12 @@
+name: hanau-media
+title:
+username:
+account: simonheb
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3652297
+bundleId: 4236557
+url: https://simonheb.shinyapps.io/hanau-media/
+when: 1613581279.63216
+asMultiple: FALSE
+asStatic: FALSE

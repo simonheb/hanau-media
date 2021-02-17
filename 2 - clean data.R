@@ -23,11 +23,15 @@ dat$Anschlag<-proper(dat$attack)
 #pepare the subset of columns that will be shown to users:
 dat$Datum<-strftime(dat$date,"%d.%m.%Y")
 dat$Titel<-apply(dat[,c("kicker","title")],1,paste,collapse=": ")
+dat$Titel[which(str_length(dat$kicker)==0)]<-as.character(dat$title[which(str_length(dat$kicker)==0)])
 dat$link<-as.character(dat$link)
 dat$link[dat$journal=="bild"]<-paste0("http://bild.de/",dat$link[dat$journal=="bild"])
 dat$Link <- paste0("<a href='",dat$link,"'>",dat$Titel,"</a> (",dat$author,")")
+dat$Link2 <- paste0("<a href='",dat$link,"'>",dat$Titel,"</a>")
+dat$Link[which(is.na(dat$author))] <- dat$Link2[which(is.na(dat$author))]
 print(nrow(dat))
-dat<-subset(dat,date>as.POSIXlt("2016-01-01 00:00:00"))
+
+dat<-subset(dat,date>as.POSIXlt("2016-01-01 00:00:00")& (is.na(spiegel_rubrik)|spiegel_rubrik!="bento.de")) #bento articles seem to be counted twice now, because the search still lists them twice
 print(nrow(dat))
 saveRDS(list(dat=dat,date=results$date),"2 - cleanedsearchresults.RDS")
 
@@ -72,20 +76,3 @@ saveRDS(dat,"outputdata article-level.RDS")
 saveRDS(data_weekly,"outputdata week-level.RDS")
 
 
-library(ggforce)
-
-
-
-
-dat %>%
-  group_by(full_days_since_attack=floor(days_since_attack),attack) %>%
-  summarize(count=sum(count))  %>% 
-  ggplot(aes(x=full_days_since_attack,y=count))+geom_line(aes(group=attack,color=attack))+xlim(c(-4,14))
-
-theme_simon<-theme_solarized() +  theme(legend.position = c(0.98, 0.98),legend.justification = c(1, 1))
-dat %>%
-  group_by(full_days_since_attack=floor(days_since_attack),attack) %>%
-  summarize(count=sum(count))  %>% 
-  ggplot(aes(x=full_days_since_attack,y=count))+geom_smooth(aes(group=attack,color=attack),method="loess",method.args = list(degree=0),span=14/365,n=10000,se=F)+xlim(c(-14,366))+
-  labs(x="Tage nach Anschlag",y="Veröffentlichungen pro Tag (Gleitender 14-Tage Durchschnitt)")+guides(color=guide_legend(title="Anschlag"))+
-  theme_simon+scale_colour_colorblind()

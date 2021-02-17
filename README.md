@@ -18,6 +18,10 @@ the suffixes are "attentat", "terror", and "anschlag". the prefies are attach sp
 
 i plug in all possible combinations of these terms with the suffixes into the search engines at www.spiegel.de/suche, www.faz.net/suche/, www.sueddeutsche.de/news, and bild.de/suche.bild.html and save the returned articles. of course, several articles come up for multiple searches, these duplicates are removed and only counted as one.
 
+## how accurately do these search terms identify articles related to the attacks?
+*false positives*: one strong indication that they do a good job at finding only relevant articles, is that only very few many hits for each of these terms are articles from before the attack took place. if the search terms were so broad that they identify random texts on different topics we should expect them to also return a number of articles from before the attack took place. they do not (as can easily be checked here: https://simonheb.shinyapps.io/hanau-media/). 
+*false negatives*: if you are aware of any article in the respective journals that deal with the attacks but are not listed in the data on https://simonheb.shinyapps.io/hanau-media/, please let me know. this would be useful to refine the searches.
+
 
 ## why are "Welt" and "Focus" not covered?
 because they have shitty search interfaces on their websites, which do not allow to search for older articles
@@ -25,8 +29,6 @@ because they have shitty search interfaces on their websites, which do not allow
 ## why don't you include newspaper/attack XYZ
 i am happy to do that. i am also happy if you do that. this project is open source. i would just suggest that if you add something to it indepently from me, than please consider also pushing your changes to this repository so that we can all discuss the results.
 
-## i found an article that matches your search terms, but does not actually talk about the attack in question
-that is well possible. there are a number of articles to which this may apply. i assume this does not drive the overall pattern, but are open to suggestions to refine the search terms or the analysis.
 
 ## how do you interact with each specific search interface and how do you treat different subjournals (spiegel plus, bento, etc.?)
 the different search interfaces require different ways of finetuning. this section provides a short overview of these measures.

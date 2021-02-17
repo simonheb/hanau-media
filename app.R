@@ -11,6 +11,7 @@ source('0 - config.R',encoding = "utf-8")
 
 results<-readRDS("2 - cleanedsearchresults.RDS")
 dat<-results$dat
+
 #prepare the data
 
 ui <- dashboardPage(
@@ -22,10 +23,9 @@ ui <- dashboardPage(
                   selected = "Hanau",multiple = T),
       selectInput(inputId="Zeitung",label="Zeitungen",choices = unique(dat$Zeitung),
                   selected = unique(dat$Zeitung),multiple = T),
-      sliderInput(inputId = "timeframe",
+      sliderInput(inputId = "timeframe", width = 450,
                   label = "Tage vor und nach dem Attentat:",
                   min = -90, max = 365*2,value = c(-30,365)),
-      checkboxInput(inputId = "filterbento", label="filter out spiegel results that were actually published by bento.de"),
       h4("Erläuterungen"),
       helpText(
         paste0("Articles on Hanau are identified as matching any of these search terms:\n",
@@ -35,7 +35,7 @@ ui <- dashboardPage(
                                   "\non spiegel.de/suche, https://www.faz.net/suche/, sueddeutsche.de/news, and www.bild.de/suche.bild.html.\n",
                                   "Articles on Berlin are identified through these terms:\n",
                                   paste0(prefix_berlin,collapse=", "),
-                                  "\nwith the same suffixes. The last update of the search results happened on ",results$date
+                                  "\nwith the same suffixes. The last update of the search results happened on ",results$date,". For more details visit: https://github.com/simonheb/hanau-media"
                 )
       )),
       dashboardBody(
