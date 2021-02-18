@@ -48,9 +48,10 @@ Such-Hits (238 Tage)<br/> SZ: 423 Hits (167 Tage)<br/> FAZ: 250 Hits
 ![](tweets_files/figure-gfm/plot3-1.png)<!-- -->
 ![](tweets_files/figure-gfm/plot3a-1.png)<!-- --> Zwischenfazit: Es
 scheint als wird zu anderen Attentaten viel, häufig und lange
-geschrieben. Das ist gut und das sollten wir für \#Hanau auch tun.
+geschrieben. Das ist meist gut und das sollten wir für \#Hanau auch tun.
 
-Lest, redet mit Freunden und mit Betroffenen von Rassismus.
+Lest und diskutiert mit Freunden und redet mit Betroffenen von
+Rassismus.
 
 <hr>
 
@@ -104,7 +105,7 @@ Ergänzungen/Korrekturen sind willkommen
 <hr>
 
 Follow Empfehlungen: @19FebruarHanau @Oezlem\_Gezer @BI\_FerhatUnvar
-@AmadeuAntonio @KeinSchlussstr\_ Bitte ergänzen.
+@AmadeuAntonio @KeinSchlussstr\_ @TemizUnvar @Dilanee Bitte ergänzen.
 
 \#SayTheirNames:
 <https://www.youtube.com/watch?v=Qu0NM_TYOPM&feature=emb_title>

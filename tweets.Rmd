@@ -104,10 +104,9 @@ ggplot(aes(x=journal,fill=attack)) +
     geom_text(aes(label=attack), stat='count', position=position_dodge(width=0.9), vjust=0,angle=80,hjust=0)+theme(legend.position = "none")
 
 ```
-Zwischenfazit: Es scheint als wird zu anderen Attentaten viel, häufig und lange geschrieben. Das ist gut und das sollten wir für #Hanau auch tun. 
+Zwischenfazit: Es scheint als wird zu anderen Attentaten viel, häufig und lange geschrieben. Das ist meist gut und das sollten wir für #Hanau auch tun.
 
-
-Lest, redet mit Freunden und mit Betroffenen von Rassismus.
+Lest und diskutiert mit Freunden und redet mit Betroffenen von Rassismus.
 <hr>
 Solche Analysen sind immer lückenhaft
 <ol>
@@ -130,6 +129,8 @@ Follow Empfehlungen:
 @BI_FerhatUnvar
 @AmadeuAntonio
 @KeinSchlussstr_
+@TemizUnvar 
+@Dilanee
 Bitte ergänzen.
 
 #SayTheirNames:
