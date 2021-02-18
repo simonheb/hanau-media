@@ -134,3 +134,50 @@ Bitte ergänzen.
 
 #SayTheirNames:
 https://www.youtube.com/watch?v=Qu0NM_TYOPM&feature=emb_title
+
+# Nachtrag:
+Hier ist der Media-Coverage Plot nochmal für jede Zeitung separat.
+
+```{r plot_bild, echo=FALSE, warning=FALSE,message=FALSE, fig.width = 16, fig.width = 9}
+dat %>%
+  subset(journal=="bild") %>%
+  group_by(full_days_since_attack=floor(days_since_attack),attack) %>%
+  summarize(count=sum(count))  %>% 
+  ggplot(aes(x=full_days_since_attack,y=count))+geom_smooth(aes(group=attack,color=attack),method="loess",method.args = list(degree=0),span=14/365,n=10000,se=F)+xlim(c(-14,366))+
+  labs(x="Tage nach dem jeweiligen Anschlag",y='Veröffentlichungen\n(laut Suchmaschine der "Bild")',title='"Bild"-Veröffentlichungen pro Tag (Gleitender 14-Tage Durchschnitt)')+guides(color=guide_legend(title="Anschlag"))+
+  theme_simon+scale_colour_colorblind()
+
+```
+
+```{r plot_spiegel, echo=FALSE, warning=FALSE,message=FALSE, fig.width = 16, fig.width = 9}
+dat %>%
+  subset(journal=="spiegel") %>% 
+  group_by(full_days_since_attack=floor(days_since_attack),attack) %>%
+  summarize(count=sum(count))  %>% 
+  ggplot(aes(x=full_days_since_attack,y=count))+geom_smooth(aes(group=attack,color=attack),method="loess",method.args = list(degree=0),span=14/365,n=10000,se=F)+xlim(c(-14,366))+
+  labs(  x="Tage nach dem jeweiligen Anschlag",y="Veröffentlichungen\n(laut Suchmaschine des 'DER SPIEGEL')",title="SPIEGEL-Veröffentlichungen pro Tag (Gleitender 14-Tage Durchschnitt)")+guides(color=guide_legend(title="Anschlag"))+
+  theme_simon+scale_colour_colorblind()
+
+```
+
+```{r plot_sz, echo=FALSE, warning=FALSE,message=FALSE, fig.width = 16, fig.width = 9}
+dat %>%
+  subset(journal=="sz") %>%
+  group_by(full_days_since_attack=floor(days_since_attack),attack) %>%
+  summarize(count=sum(count))  %>% 
+  ggplot(aes(x=full_days_since_attack,y=count))+geom_smooth(aes(group=attack,color=attack),method="loess",method.args = list(degree=0),span=14/365,n=10000,se=F)+xlim(c(-14,366))+
+  labs( x="Tage nach dem jeweiligen Anschlag",y="Veröffentlichungen\n(laut Suchmaschine der SZ)",title="SZ-Veröffentlichungen pro Tag (Gleitender 14-Tage Durchschnitt)")+guides(color=guide_legend(title="Anschlag"))+
+  theme_simon+scale_colour_colorblind()
+
+```
+
+```{r plot_faz, echo=FALSE, warning=FALSE,message=FALSE, fig.width = 16, fig.width = 9}
+dat %>%
+  subset(journal=="faz") %>%
+  group_by(full_days_since_attack=floor(days_since_attack),attack) %>%
+  summarize(count=sum(count))  %>% 
+  ggplot(aes(x=full_days_since_attack,y=count))+geom_smooth(aes(group=attack,color=attack),method="loess",method.args = list(degree=0),span=14/365,n=10000,se=F)+xlim(c(-14,366))+
+  labs( x="Tage nach dem jeweiligen Anschlag",y="Veröffentlichungen\n(laut Suchmaschine FAZ)",title="FAZ-Veröffentlichungen pro Tag (Gleitender 14-Tage Durchschnitt)")+guides(color=guide_legend(title="Anschlag"))+
+  theme_simon+scale_colour_colorblind()
+
+```

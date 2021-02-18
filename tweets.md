@@ -84,3 +84,15 @@ Follow Empfehlungen: @19FebruarHanau @Oezlem\_Gezer @BI\_FerhatUnvar
 
 \#SayTheirNames:
 <https://www.youtube.com/watch?v=Qu0NM_TYOPM&feature=emb_title>
+
+# Nachtrag:
+
+Hier ist der Media-Coverage Plot nochmal für jede Zeitung separat.
+
+![](tweets_files/figure-gfm/plot_bild-1.png)<!-- -->
+
+![](tweets_files/figure-gfm/plot_spiegel-1.png)<!-- -->
+
+![](tweets_files/figure-gfm/plot_sz-1.png)<!-- -->
+
+![](tweets_files/figure-gfm/plot_faz-1.png)<!-- -->
