@@ -12,8 +12,8 @@ Daten-Thread und Aufruf Hanau und Betroffenen mehr Raum zu geben 🧵
 Anschläge prägen Diskurse in Medien und werden so gesellschaftlich
 aufgearbeitet. Das ist wichtig, wenn systemische Ursachen (Rassismus)
 erkennbar sind. Als Maß für mediale Aufmerksamkeit zähle ich
-automatisiert Suchergebnisse zu passenden Schlagworten in
-@Bild,@SZ,@FAZ,@spiegel
+automatisiert Suchergebnisse zu passenden Schlagworten in @Bild @SZ @FAZ
+@spiegel
 
 ![](tweets_files/figure-gfm/plot2-1.png)<!-- -->
 
@@ -39,14 +39,20 @@ Berliner Weihnachtsmarkt/Breitscheidplatz.
 
 <hr>
 
-Zum Berliner Attentat gibt es im ersten Jahr über 2300 Suchergebnisse -
-fast jeden zweiten Tag findet sich in jeder der Zeitungen eine
-Erwähnung. Bei Bild noch öfter.<br/> Bild: 1245 Such-Hits (238
-Tage)<br/> SZ: 423 Hits (167 Tage)<br/> FAZ: 250 Hits (107 Tage)<br/>
-Spiegel: 437 Hits (155 Tage)
+Zum Berliner Attentat gibt es im ersten Jahr über 2300
+Suchergebnisse—fast jeden zweiten Tag findet sich in jeder Zeitung
+eine Erwähnung. Bei Bild an zwei von drei Tagen:<br/> Bild: 1245
+Such-Hits (238 Tage)<br/> SZ: 423 Hits (167 Tage)<br/> FAZ: 250 Hits
+(107 Tage)<br/> Spiegel: 437 Hits (155 Tage)
 
 ![](tweets_files/figure-gfm/plot3-1.png)<!-- -->
-![](tweets_files/figure-gfm/plot3a-1.png)<!-- -->
+![](tweets_files/figure-gfm/plot3a-1.png)<!-- --> Zwischenfazit: Es
+scheint als wird zu anderen Attentaten viel, häufig und lange
+geschrieben. Das ist gut und das sollten wir für \#Hanau auch tun.
+
+Lest, redet mit Freunden und mit Betroffenen von Rassismus.
+
+<hr>
 
 Solche Analysen sind immer lückenhaft
 
@@ -54,8 +60,8 @@ Solche Analysen sind immer lückenhaft
 
 <li>
 
-Veröffentlichungen unterscheiden sich in Länge, Qualität und Richtung.
-Hier werden alle gleich gezählt.
+Texte unterscheiden sich in Länge, Qualität und Richtung. Hier werden
+alle gleich gezählt.
 
 </li>
 
@@ -90,7 +96,15 @@ zusammen.
 Code und wichtige Details sind zugänglich und prüfbar:
 github.com/simonheb/hanau-media Daten sind einsehbar via:
 simonheb.shinyapps.io/hanau-media/ Updates zum Thread:
-<https://github.com/simonheb/hanau-media/blob/main/tweets.md>
+github.com/simonheb/hanau-media/blob/main/tweets.md
 
 Es gibt natürlich keine Garantie für die Richtigkeit der Zahlen.
 Ergänzungen/Korrekturen sind willkommen
+
+<hr>
+
+Follow Empfehlungen: @19FebruarHanau @Oezlem\_Gezer @BI\_FerhatUnvar
+@AmadeuAntonio @KeinSchlussstr\_ Bitte ergänzen.
+
+\#SayTheirNames:
+<https://www.youtube.com/watch?v=Qu0NM_TYOPM&feature=emb_title>
