@@ -31,10 +31,10 @@ dat$full_days_since_attack<-floor(dat$days_since_attack)
 theme_simon<-theme_solarized() +  theme(legend.position = c(0.98, 0.98),legend.justification = c(1, 1))
 
 ```
-Das rassistische Hanau-Attentat jährt sich. Erhält die Aufarbeitung angemessene gesellschaftliche Aufmerksamkeit? Das ist schwer zu quantifizieren. Es scheint aber als ob große Zeitungen es weniger thematisieren
+Das rassistische Attentat von #Hanau jährt sich. Erhält die Aufarbeitung angemessene gesellschaftliche Aufmerksamkeit? Das ist schwer zu messen. Es scheint aber als ob große Zeitungen es weniger thematisieren
 
-Daten-Thread und Aufruf Hanau und Betroffenen mehr Raum zu geben
-🧵
+Daten-Thread & Aufruf dazu Hanau und Betroffenen mehr Raum zu geben 🧵
+
 ```{r plot, echo=FALSE, warning=FALSE,message=FALSE, fig.width = 16, fig.width = 9}
 dat %>%
   group_by(full_days_since_attack=floor(days_since_attack),attack) %>%
@@ -45,7 +45,7 @@ dat %>%
 
 ```
 
-Anschläge prägen Diskurse in Medien und werden so gesellschaftlich aufgearbeitet. Das ist wichtig, wenn systemische Ursachen (Rassismus) erkennbar sind. Als Maß für mediale Aufmerksamkeit zähle ich automatisiert Suchergebnisse zu passenden Schlagworten in @Bild @SZ @FAZ @spiegel
+Anschläge prägen Diskurse in Medien und werden so von uns aufgearbeitet. Das ist wichtig, wenn gesellschaftliche Ursachen (Rassismus) erkennbar sind. Als Maß für mediale Aufmerksamkeit zähle ich automatisiert Suchergebnisse zu passenden Schlagworten in @Bild @SZ @FAZ @derspiegel
 
 ```{r plot2, echo=FALSE, warning=FALSE, fig.width = 16, fig.width = 9}
 subset(dat, attack=="hanau" & count>0 & days_since_attack>0) %>% ggplot(aes(x=journal)) + geom_bar(aes(fill=journal)) +
@@ -55,13 +55,13 @@ subset(dat, attack=="hanau" & count>0 & days_since_attack>0) %>% ggplot(aes(x=jo
 
 Insgesamt listen diese Zeitungen über `r conservative(nrow(subset(dat,attack=="hanau" & days_since_attack>=0 & count>0)),2)` Veröffentlichungen zu Suchwörtern zum rassistischen Anschlag in Hanau<br />
 Bild: `r nrow(subset(dat,attack=="hanau" & days_since_attack>=0 & count>0 & journal=="bild"))`<br />
-SZ: `r nrow(subset(dat,attack=="hanau" & days_since_attack>=0 & count>0 & journal=="sz"))`<br />
 Spiegel: `r nrow(subset(dat,attack=="hanau" & days_since_attack>=0 & count>0 & journal=="spiegel"))`<br />
+SZ: `r nrow(subset(dat,attack=="hanau" & days_since_attack>=0 & count>0 & journal=="sz"))`<br />
 FAZ: `r nrow(subset(dat,attack=="hanau" & days_since_attack>=0 & count>0 & journal=="faz"))`<br /><br />
 
 Dabei listet Bild aber an über `r conservative(365-nrow(unique(subset(dat,attack=="hanau" & full_days_since_attack %in% 0:365  & count>0 & journal=="bild",select="full_days_since_attack"))))` Tagen des letzten Jahres garnichts zu dem Thema 
-(SZ: `r 365-nrow(unique(subset(dat,attack=="hanau" & full_days_since_attack %in% 0:365  & count>0 & journal=="sz",select="full_days_since_attack")))`,
-Spiegel:  `r 365-nrow(unique(subset(dat,attack=="hanau" & full_days_since_attack %in% 0:365  & count>0 & journal=="spiegel",select="full_days_since_attack")))`,
+(Spiegel:  `r 365-nrow(unique(subset(dat,attack=="hanau" & full_days_since_attack %in% 0:365  & count>0 & journal=="spiegel",select="full_days_since_attack")))`,
+SZ: `r 365-nrow(unique(subset(dat,attack=="hanau" & full_days_since_attack %in% 0:365  & count>0 & journal=="sz",select="full_days_since_attack")))`,
 FAZ:  `r 365-nrow(unique(subset(dat,attack=="hanau" & full_days_since_attack %in% 0:365  & count>0 & journal=="faz",select="full_days_since_attack")))`)
 
 
@@ -77,11 +77,12 @@ Ist das wenig? Wenn ja, ist das so weil sich die Tat nicht gegen die weiße Mehr
 <hr>
 Zu Hanau finden sich ähnlich viele Einträge wie zum Ansbach-Anschlag, bei dem niemand starb aber 15 Menschen zum Teil schwer verletzt wurden. Dieser Anschlag erhielt medial weit weniger Aufmerksamkeit als der vom Berliner Weihnachtsmarkt/Breitscheidplatz.
 <hr>
-Zum Berliner Attentat gibt es im ersten Jahr über `r conservative(nrow(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365  & count>0)),2)`  Suchergebnisse—fast jeden zweiten Tag findet sich in jeder Zeitung eine Erwähnung. Bei Bild an zwei von drei Tagen:<br/>
-Bild: `r nrow(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:366 & count>0 & journal=="bild"))` Such-Hits (`r nrow(unique(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365  & count>0 & journal=="bild",select="full_days_since_attack")))` Tage)<br/>
-SZ: `r nrow(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365& full_days_since_attack>=0 & count>0 & journal=="sz"))` Hits (`r nrow(unique(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365  & count>0 & journal=="sz",select="full_days_since_attack")))` Tage)<br/>
-FAZ: `r nrow(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365& full_days_since_attack>=0 & count>0 & journal=="faz"))` Hits (`r nrow(unique(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365  & count>0 & journal=="faz",select="full_days_since_attack")))` Tage)<br/>
-Spiegel: `r nrow(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365 & full_days_since_attack>=0 & count>0 & journal=="spiegel"))` Hits  (`r nrow(unique(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365  & count>0 & journal=="spiegel",select="full_days_since_attack")))` Tage)
+Zum Berlin-Attentat gab es nach 1 Jahr über `r conservative(nrow(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365  & count>0)),2)`  Suchergebnisse—fast jeden 2. Tag eine Erwähnung. In Bild an 2 von 3 Tagen:<br/>
+Bild: `r nrow(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:366 & count>0 & journal=="bild"))` Such-Hits (`r 365-nrow(unique(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365  & count>0 & journal=="bild",select="full_days_since_attack")))` Tage ohne.
+Für Hanau waren es >`r conservative(365-nrow(unique(subset(dat,attack=="hanau" & full_days_since_attack %in% 0:365  & count>0 & journal=="bild",select="full_days_since_attack"))))`)<br/>
+Spiegel: `r nrow(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365 & full_days_since_attack>=0 & count>0 & journal=="spiegel"))` Hits  (`r 365-nrow(unique(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365  & count>0 & journal=="spiegel",select="full_days_since_attack")))` Tage ohne)<br />
+SZ: `r nrow(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365& full_days_since_attack>=0 & count>0 & journal=="sz"))` Hits (`r 365-nrow(unique(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365  & count>0 & journal=="sz",select="full_days_since_attack")))` Tage ohne)<br/>
+FAZ: `r nrow(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365& full_days_since_attack>=0 & count>0 & journal=="faz"))` Hits (`r 365-nrow(unique(subset(dat,attack=="berlin" & full_days_since_attack %in% 0:365  & count>0 & journal=="faz",select="full_days_since_attack")))` Tage ohne)
 
 ```{r plot3, echo=FALSE, warning=FALSE}
 ggplot(subset(dat, count>0 &
@@ -104,18 +105,16 @@ ggplot(aes(x=journal,fill=attack)) +
     geom_text(aes(label=attack), stat='count', position=position_dodge(width=0.9), vjust=0,angle=80,hjust=0)+theme(legend.position = "none")
 
 ```
+
 Zwischenfazit: Es scheint als wird zu anderen Attentaten viel, häufig und lange geschrieben. Das ist meist gut und das sollten wir für #Hanau auch tun.
 
 Lest und diskutiert mit Freunden und redet mit Betroffenen von Rassismus.
 <hr>
-Solche Analysen sind immer lückenhaft
-<ol>
-<li> Texte unterscheiden sich in Länge, Qualität und Richtung. Hier werden alle gleich gezählt.</li>
-<li> Textsuche ist imperfekt. Manche Veröffentlichungen fehlen andere sind falsch zugeordnet. Unpassende Suchworte könnten alles kaputt machen.</li>
-<hr>
-<li> Aufarbeitung passiert auch auf anderen Wegen als in Zeitungen.</li>
-<li> Aufmerksamkeit ist ein knappes Gut. Andere Themen können Anschläge aus den Medien verdrängen (z.B. Trumps 2017, Corona 2020). Die verhältnismäßig geringe Artikeldichte hängt sicher *auch* mit Corona zusammen.</li>
-</ol>
+Caveats—Solche Analysen sind immer lückenhaft:<br />
+1️⃣ Texte unterscheiden sich in Länge, Qualität und Richtung. Hier werden alle gleich gezählt<br />
+2️⃣ Textsuche ist imperfekt. Manche Veröffentlichungen fehlen andere sind falsch zugeordnet. Unpassende Suchworte könnten alles kaputt machen<br />
+3️⃣ Aufarbeitung passiert auch auf anderen Wegen als in Zeitungen<br/>
+4️⃣ Aufmerksamkeit ist ein knappes Gut. Andere Themen können Anschläge aus den Medien verdrängen (z.B. 2017 Trump+2020 Corona). Die verhältnismäßig geringe Artikeldichte zu Hanau hängt sicher auch mit Corona zusammen
 <hr>
 Code und wichtige Details sind zugänglich und prüfbar: github.com/simonheb/hanau-media
 Daten sind einsehbar via: simonheb.shinyapps.io/hanau-media/
