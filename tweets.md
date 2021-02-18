@@ -1,27 +1,28 @@
 Tweets on hanau-media
 ================
 
-Erhält die Aufarbeitung des Hanau-Attentats genug gesellschaftliche
-Aufmerksamkeit? Das ist schwer zu quantifizieren. Es scheint aber, als
-ob große Zeitungen es wenig thematisieren.
+Das rassistische Hanau-Attentat jährt sich. Erhält die Aufarbeitung
+angemessene gesellschaftliche Aufmerksamkeit? Das ist schwer zu
+quantifizieren. Es scheint aber als ob große Zeitungen es weniger
+thematisieren
 
-Ein Daten-🧵 und ein Aufruf Hanau und den Betroffenen mehr Raum zu geben.
+Daten-Thread und Aufruf Hanau und Betroffenen mehr Raum zu geben 🧵
 ![](tweets_files/figure-gfm/plot-1.png)<!-- -->
 
 Anschläge prägen Diskurse in Medien und werden so gesellschaftlich
-aufgearbeitet. Das ist wichtig, besonders wenn systemische Ursachen
-(⇒Rassismus) erkennbar sind. Als Maß für mediale Aufmerksamkeit zähle
-ich Suchergebnisse zu passenden Schlagworten in
-@Bild,@SZ,@FAZ,@derspiegel
+aufgearbeitet. Das ist wichtig, wenn systemische Ursachen (Rassismus)
+erkennbar sind. Als Maß für mediale Aufmerksamkeit zähle ich
+automatisiert Suchergebnisse zu passenden Schlagworten in
+@Bild,@SZ,@FAZ,@spiegel
 
 ![](tweets_files/figure-gfm/plot2-1.png)<!-- -->
 
 Insgesamt listen diese Zeitungen über 710 Veröffentlichungen zu
 Suchwörtern zum rassistischen Anschlag in Hanau<br /> Bild: 122<br />
-SZ: 205<br /> Spiegel: 212<br /> FAZ: 179.<br /><br />
+SZ: 205<br /> Spiegel: 212<br /> FAZ: 179<br /><br />
 
-Traurigerweise listet Bild aber an über 300 Tagen des letzten Jahres
-garnichts zu dem Thema (SZ: 279, Spiegel: 271, FAZ: 274)
+Dabei listet Bild aber an über 300 Tagen des letzten Jahres garnichts zu
+dem Thema (SZ: 279, Spiegel: 271, FAZ: 274)
 
 ![](tweets_files/figure-gfm/plot4b-1.png)<!-- -->
 
@@ -47,21 +48,21 @@ Spiegel: 437 Hits (155 Tage)
 ![](tweets_files/figure-gfm/plot3-1.png)<!-- -->
 ![](tweets_files/figure-gfm/plot3a-1.png)<!-- -->
 
-Caveats: So eine Analyse ist natürlich massiv Lückenhaft:
+Solche Analysen sind immer lückenhaft
 
 <ol>
 
 <li>
 
-Veröffentlichungen unterscheiden sich in Länge, Qualität und
-Ausrichtung. Hier werden alle gleich gezählt.
+Veröffentlichungen unterscheiden sich in Länge, Qualität und Richtung.
+Hier werden alle gleich gezählt.
 
 </li>
 
 <li>
 
-Text-Suche ist nie perfekt. Manche Veröffentlichungen fehlen andere sind
-falsch zugeordnet.
+Textsuche ist imperfekt. Manche Veröffentlichungen fehlen andere sind
+falsch zugeordnet. Unpassende Suchworte könnten alles kaputt machen.
 
 </li>
 
@@ -86,8 +87,10 @@ zusammen.
 
 <hr>
 
-Der Code und weitere erklärende Details sind zugänglich, prüfbar und
-replizierbar unter: github.com/simonheb/hanau-media.<br/> Die Daten sind
-via: simonheb.shinyapps.io/hanau-media/ einsehbar.<br/> Es gibt
-natürlich keine Garantie für die Richtigkeit der Zahlen und Ergänzungen
-und Korrekturen sind willkommen<br/>
+Code und wichtige Details sind zugänglich und prüfbar:
+github.com/simonheb/hanau-media Daten sind einsehbar via:
+simonheb.shinyapps.io/hanau-media/ Updates zum Thread:
+<https://github.com/simonheb/hanau-media/blob/main/tweets.md>
+
+Es gibt natürlich keine Garantie für die Richtigkeit der Zahlen.
+Ergänzungen/Korrekturen sind willkommen

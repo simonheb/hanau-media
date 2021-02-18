@@ -29,24 +29,25 @@ dat$full_days_since_attack<-floor(dat$days_since_attack)
 theme_simon<-theme_solarized() +  theme(legend.position = c(0.98, 0.98),legend.justification = c(1, 1))
 
 ```
-Erhält die Aufarbeitung des Hanau-Attentats genug gesellschaftliche Aufmerksamkeit? Das ist schwer zu quantifizieren. Es scheint aber, als ob große Zeitungen es wenig thematisieren.
+Das rassistische Hanau-Attentat jährt sich. Erhält die Aufarbeitung angemessene gesellschaftliche Aufmerksamkeit? Das ist schwer zu quantifizieren. Es scheint aber als ob große Zeitungen es weniger thematisieren
 
-Ein Daten-🧵 und ein Aufruf Hanau und den Betroffenen mehr Raum zu geben.
+Daten-Thread und Aufruf Hanau und Betroffenen mehr Raum zu geben
+🧵
 ```{r plot, echo=FALSE, warning=FALSE,message=FALSE}
 dat %>%
   group_by(full_days_since_attack=floor(days_since_attack),attack) %>%
   summarize(count=sum(count))  %>% 
   ggplot(aes(x=full_days_since_attack,y=count))+geom_smooth(aes(group=attack,color=attack),method="loess",method.args = list(degree=0),span=14/365,n=10000,se=F)+xlim(c(-14,366))+
-  labs(x="Tage nach Anschlag",y="Veröffentlichungen (laut Suchmaschine der jew. Zeitung)",title="Veröffentlichungen pro Tag (Gleitender 14-Tage Durchschnitt)")+guides(color=guide_legend(title="Anschlag"))+
+  labs(caption="Die Suchmaschinen von Bild, SZ, FAZ und Spiegel wurden kombiniert.", x="Tage nach dem jeweiligen Anschlag",y="Veröffentlichungen\n(laut Suchmaschine der jeweiligen Zeitung)",title="Veröffentlichungen pro Tag (Gleitender 14-Tage Durchschnitt)")+guides(color=guide_legend(title="Anschlag"))+
   theme_simon+scale_colour_colorblind()
 
 ```
 
-Anschläge prägen Diskurse in Medien und werden so gesellschaftlich aufgearbeitet. Das ist wichtig, besonders wenn systemische Ursachen (⇒Rassismus) erkennbar sind. Als Maß für mediale Aufmerksamkeit zähle ich Suchergebnisse zu passenden Schlagworten in @Bild,@SZ,@FAZ,@derspiegel
+Anschläge prägen Diskurse in Medien und werden so gesellschaftlich aufgearbeitet. Das ist wichtig, wenn systemische Ursachen (Rassismus) erkennbar sind. Als Maß für mediale Aufmerksamkeit zähle ich automatisiert Suchergebnisse zu passenden Schlagworten in @Bild,@SZ,@FAZ,@spiegel
 
 ```{r plot2, echo=FALSE, warning=FALSE}
 subset(dat, attack=="hanau" & count>0 & days_since_attack>0) %>% ggplot(aes(x=journal)) + geom_bar(aes(fill=journal)) +
-    labs(x="Zeitung",y="",title="Veröffentlichungen im ersten Jahr")+
+    labs(x="Zeitung",y="",title="Suchergebnisse zu Texten im Jahr nach dem Hanau-Anschlag")+
   theme_simon+ scale_fill_manual(values = c("sienna1", "sienna4", "tomato2", "hotpink4"))+theme(legend.position = "none")
 ```
 
@@ -54,9 +55,9 @@ Insgesamt listen diese Zeitungen über `r conservative(nrow(subset(dat,attack=="
 Bild: `r nrow(subset(dat,attack=="hanau" & days_since_attack>=0 & count>0 & journal=="bild"))`<br />
 SZ: `r nrow(subset(dat,attack=="hanau" & days_since_attack>=0 & count>0 & journal=="sz"))`<br />
 Spiegel: `r nrow(subset(dat,attack=="hanau" & days_since_attack>=0 & count>0 & journal=="spiegel"))`<br />
-FAZ: `r nrow(subset(dat,attack=="hanau" & days_since_attack>=0 & count>0 & journal=="faz"))`.<br /><br />
+FAZ: `r nrow(subset(dat,attack=="hanau" & days_since_attack>=0 & count>0 & journal=="faz"))`<br /><br />
 
-Traurigerweise listet Bild aber an über `r conservative(365-nrow(unique(subset(dat,attack=="hanau" & full_days_since_attack %in% 0:365  & count>0 & journal=="bild",select="full_days_since_attack"))))` Tagen des letzten Jahres garnichts zu dem Thema 
+Dabei listet Bild aber an über `r conservative(365-nrow(unique(subset(dat,attack=="hanau" & full_days_since_attack %in% 0:365  & count>0 & journal=="bild",select="full_days_since_attack"))))` Tagen des letzten Jahres garnichts zu dem Thema 
 (SZ: `r 365-nrow(unique(subset(dat,attack=="hanau" & full_days_since_attack %in% 0:365  & count>0 & journal=="sz",select="full_days_since_attack")))`,
 Spiegel:  `r 365-nrow(unique(subset(dat,attack=="hanau" & full_days_since_attack %in% 0:365  & count>0 & journal=="spiegel",select="full_days_since_attack")))`,
 FAZ:  `r 365-nrow(unique(subset(dat,attack=="hanau" & full_days_since_attack %in% 0:365  & count>0 & journal=="faz",select="full_days_since_attack")))`)
@@ -65,7 +66,7 @@ FAZ:  `r 365-nrow(unique(subset(dat,attack=="hanau" & full_days_since_attack %in
 ```{r plot4b, echo=FALSE,message=FALSE}
 subset(dat,attack=="hanau" & full_days_since_attack>0) %>% group_by(journal,full_days_since_attack) %>% summarize(nothing=sum(count)==0) %>% filter(nothing) %>%
     ggplot(aes(x=journal)) + geom_bar(aes(group=journal,fill=journal)) +
-    labs(x="Zeitung",y="",title="Tage ohne überhaupt eine Veröffentlichung zum Anschlag in Hanau\n(im letzten Jahr)")+ylim(0,365)+
+    labs(x="Zeitung",y="",title="Tage ohne überhaupt ein Suchergebnisse zum Anschlag in Hanau\n(im vergangenen Jahr)")+ylim(0,365)+
   theme_simon+ scale_fill_manual(values = c("sienna1", "sienna4", "tomato2", "hotpink4"))+theme(legend.position = "none")
 ```
 
@@ -85,7 +86,7 @@ ggplot(subset(dat, count>0 &
                   attack %in% c("hanau","berlin","ansbach","halle") & 
                   full_days_since_attack %in% 14:365),
     aes(x=journal,fill=attack)) +
-    labs(x="Zeitung",title="Veröffentlichung im ersten Jahr nach Anschlag\n(ohne die ersten 2 Wochen)",y="")+
+    labs(x="Zeitung",title="Suchergebnisse zu Veröffentlichungen im ersten Jahr nach Anschlag\n(ohne die ersten 2 Wochen)",y="")+
     theme_simon+scale_fill_colorblind()+
     geom_bar(position = "dodge")+ylim(c(0,730))+
     geom_text(aes(label=attack), stat='count', position=position_dodge(width=0.9), vjust=0,angle=80,hjust=0)+theme(legend.position = "none")
@@ -95,7 +96,7 @@ ggplot(subset(dat, count>0 &
 subset(dat,attack %in% c("hanau","berlin","ansbach","halle")& full_days_since_attack %in% 0:365) %>% group_by(journal,full_days_since_attack,attack) %>% 
   summarize(nothing=sum(count)==0) %>% filter(nothing) %>%
 ggplot(aes(x=journal,fill=attack)) +
-    labs(x="Zeitung",title="Tage im ersten Jahr ohne überhaupt eine Veröffentlichung zum Thema",y="")+
+    labs(x="Zeitung",title="Tage im ersten Jahr ohne überhaupt ein Suchergebnis zum Thema",y="")+
     theme_simon+scale_fill_colorblind()+
     geom_bar(position = "dodge")+ylim(c(0,365))+
     geom_text(aes(label=attack), stat='count', position=position_dodge(width=0.9), vjust=0,angle=80,hjust=0)+theme(legend.position = "none")
@@ -103,19 +104,17 @@ ggplot(aes(x=journal,fill=attack)) +
 ```
 
 
-
-
-
-Caveats:
-So eine Analyse ist natürlich massiv Lückenhaft:
+Solche Analysen sind immer lückenhaft
 <ol>
-<li> Veröffentlichungen unterscheiden sich in Länge, Qualität und Ausrichtung. Hier werden alle gleich gezählt.</li>
-<li> Text-Suche ist nie perfekt. Manche Veröffentlichungen fehlen andere sind falsch zugeordnet.</li>
+<li> Veröffentlichungen unterscheiden sich in Länge, Qualität und Richtung. Hier werden alle gleich gezählt.</li>
+<li> Textsuche ist imperfekt. Manche Veröffentlichungen fehlen andere sind falsch zugeordnet. Unpassende Suchworte könnten alles kaputt machen.</li>
 <hr>
 <li> Aufarbeitung passiert auch auf anderen Wegen als in Zeitungen.</li>
 <li> Aufmerksamkeit ist ein knappes Gut. Andere Themen können Anschläge aus den Medien verdrängen (z.B. Trumps 2017, Corona 2020). Die verhältnismäßig geringe Artikeldichte hängt sicher *auch* mit Corona zusammen.</li>
 </ol>
 <hr>
-Der Code und weitere erklärende Details sind zugänglich, prüfbar und replizierbar unter: github.com/simonheb/hanau-media.<br/>
-Die Daten sind via: simonheb.shinyapps.io/hanau-media/ einsehbar.<br/>
-Es gibt natürlich keine Garantie für die Richtigkeit der Zahlen und Ergänzungen und Korrekturen sind willkommen<br/>
+Code und wichtige Details sind zugänglich und prüfbar: github.com/simonheb/hanau-media
+Daten sind einsehbar via: simonheb.shinyapps.io/hanau-media/
+Updates zum Thread: https://github.com/simonheb/hanau-media/blob/main/tweets.md
+
+Es gibt natürlich keine Garantie für die Richtigkeit der Zahlen. Ergänzungen/Korrekturen sind willkommen
