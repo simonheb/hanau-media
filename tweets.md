@@ -55,19 +55,51 @@ auch tun.
 Lest und diskutiert mit Freunden und redet mit Betroffenen von
 Rassismus.
 
-<hr>
+Caveats—Solche Analysen sind immer lückenhaft:
 
-Caveats—Solche Analysen sind immer lückenhaft:<br /> 1️⃣ Texte
-unterscheiden sich in Länge, Qualität und Richtung. Hier werden alle
-gleich gezählt<br /> 2️⃣ Textsuche ist imperfekt. Manche
-Veröffentlichungen fehlen andere sind falsch zugeordnet. Unpassende
-Suchworte könnten alles kaputt machen<br /> 3️⃣ Aufarbeitung passiert
-auch auf anderen Wegen als in Zeitungen<br/> 4️⃣ Aufmerksamkeit ist ein
-knappes Gut. Andere Themen können Anschläge aus den Medien verdrängen
-(z.B. 2017 Trump+2020 Corona). Die verhältnismäßig geringe Artikeldichte
-zu Hanau hängt sicher auch mit Corona zusammen
+<ol>
 
-<hr>
+<li>
+
+Texte unterscheiden sich in Länge, Qualität und Richtung. Hier werden
+alle gleich gezählt
+
+</li>
+
+<li>
+
+Textsuche ist imperfekt. Manche Veröffentlichungen fehlen andere sind
+falsch zugeordnet. Unpassende Suchworte könnten alles kaputt machen
+
+</li>
+
+<li>
+
+Aufarbeitung passiert auch auf anderen Wegen als in Zeitungen
+
+</li>
+
+<li>
+
+Aufmerksamkeit ist ein knappes Gut. Andere Themen können Anschläge aus
+den Medien verdrängen (z.B. 2017 Trump+2020 Corona). Die verhältnismäßig
+geringe Artikeldichte zu Hanau hängt sicher auch mit Corona zusammen
+
+</li>
+
+<li>
+
+Nachtrag 2: Sind Vergleiche zwischen Hauptstadt und Klein-/Mittelstadt
+unfair? Hauptstädte kriegen immer mehr Aufmerksamkeit. Abgesehen davon
+dass die Hauptstoßrichtung hier nicht der Vergleich sein soll, ist das
+meiner Meinung nach zwar eine Erklärung, aber keine Rechtfertigung für
+den Unterschied. Gesellschaftliche Aufmerksamkeit sollt nicht auf Dinge
+fallen einfach weil sie in der Hauptstadt passieren. “Hauptstatt” ist
+sicher ein Kriterium, sollte es aber nicht sein.
+
+</li>
+
+</ol>
 
 Code und wichtige Details sind zugänglich und prüfbar:
 github.com/simonheb/hanau-media Daten sind einsehbar via:
